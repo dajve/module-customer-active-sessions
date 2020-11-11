@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSession"/>
+    <preference for="Dajve\CustomerActiveSessions\Api\CustomerActiveSessionRepositoryInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSessionRepository"/>
+
+    <type name="Dajve\CustomerActiveSessions\Model\CustomerActiveSession\Validator">
+        <arguments>
+            <argument name="statusSource" xsi:type="object">Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Source\Status</argument>
+        </arguments>
+    </type>
+
+    <type name="Dajve\CustomerActiveSessions\Model\CustomerActiveSession">
+        <arguments>
+            <argument name="validator" xsi:type="object">Dajve\CustomerActiveSessions\Model\CustomerActiveSession\Validator</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface" xsi:type="string">Dajve\CustomerActiveSessions\Api\CustomerActiveSessionRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Dajve\CustomerActiveSessions\CommonVars::DB_TABLE_CUSTOMER_ACTIVE_SESSION</item>
+                    <item name="identifierField" xsi:type="const">Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface::ID</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\EntityManager\HydratorPool">
+        <arguments>
+            <argument name="hydrators" xsi:type="array">
+                <item name="Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Dajve\CustomerActiveSessions\Model\Api\SearchCriteria\CustomerActiveSession\CollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Dajve\CustomerActiveSessions\Model\CustomerActiveSessionRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Dajve\CustomerActiveSessions\Model\Api\SearchCriteria\CustomerActiveSession\CollectionProcessor</argument>
+        </arguments>
+    </type>
+</config>
