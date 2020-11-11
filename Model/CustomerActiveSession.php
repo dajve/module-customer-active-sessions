@@ -79,7 +79,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param string $sessionId
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setSessionId(string $sessionId): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -96,7 +96,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param int $customerId
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setCustomerId(int $customerId): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -113,7 +113,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param string $startTime
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setStartTime(string $startTime): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -130,7 +130,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param string $lastActivityTime
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setLastActivityTime(string $lastActivityTime): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -147,7 +147,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param string $terminationTime
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setTerminationTime(string $terminationTime): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -169,7 +169,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param int $initialStoreId
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setInitialStoreId(int $initialStoreId): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -186,7 +186,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param int $lastStoreId
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setLastStoreId(int $lastStoreId): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -203,7 +203,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param int $status
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setStatus(int $status): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -215,12 +215,12 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
      */
     public function getStatus(): int
     {
-        return (int)$this->getStatus();
+        return (int)$this->getData(static::STATUS);
     }
 
     /**
      * @param string $remoteIp
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setRemoteIp(string $remoteIp): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -237,7 +237,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param string $userAgent
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
     public function setUserAgent(string $userAgent): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
     {
@@ -254,15 +254,16 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
 
     /**
      * @param CustomerActiveSessionExtensionInterface $extensionAttributes
-     * @return CustomerActiveSessionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
      */
-    public function setExtensionAttributes(CustomerActiveSessionExtensionInterface $extensionAttributes): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface
-    {
+    public function setExtensionAttributes(
+        \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionExtensionInterface $extensionAttributes
+    ): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface {
         return $this->setData(static::EXTENSION_ATTRIBUTES_KEY, $extensionAttributes);
     }
 
     /**
-     * @return CustomerActiveSessionExtensionInterface
+     * @return \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionExtensionInterface
      */
     public function getExtensionAttributes(): \Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionExtensionInterface
     {
