@@ -1,0 +1,27 @@
+{
+    "djv_customer_active_session": {
+        "column": {
+            "id": true,
+            "session_id": true,
+            "customer_id": true,
+            "start_time": true,
+            "last_activity_time": true,
+            "termination_time": true,
+            "initial_store_id": true,
+            "last_store_id": true,
+            "status": true,
+            "remote_ip": true,
+            "user_agent": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "DJV_CUSTOMER_ACTIVE_SESSION_CUSTOMER_ID_CUSTOMER_ENTITY_ID": true,
+            "DJV_CUSTOMER_ACTIVE_SESSION_INITIAL_STORE_ID_STORE_STORE_ID": true,
+            "DJV_CUSTOMER_ACTIVE_SESSION_LAST_STORE_ID_STORE_STORE_ID": true
+        },
+        "index": {
+            "DJV_CUSTOMER_ACTIVE_SESSION_SESSION_ID": true,
+            "DJV_CUSTOMER_ACTIVE_SESSION_CUSTOMER_ID": true
+        }
+    }
+}

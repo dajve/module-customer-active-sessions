@@ -1,0 +1,46 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="djv_customer_active_session" comment="Customer sessions table">
+        <column name="id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column name="session_id" xsi:type="varchar" nullable="false" length="128" comment="Session ID"/>
+        <column name="customer_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Customer entity ID"/>
+        <column name="start_time" xsi:type="datetime" on_update="false" nullable="false" comment="Session start time"/>
+        <column name="last_activity_time" xsi:type="datetime" on_update="false" nullable="false" comment="Session last activity time"/>
+        <column name="termination_time" xsi:type="datetime" on_update="false" nullable="false" comment="Session termination time"/>
+        <column name="initial_store_id" xsi:type="smallint" padding="5" unsigned="true" nullable="false" comment="Store ID in which session was started"/>
+        <column name="last_store_id" xsi:type="smallint" padding="5" unsigned="true" nullable="false" comment="Store ID in which last activity performed"/>
+        <column name="status" xsi:type="smallint" padding="5" unsigned="true" nullable="false" comment="Session status"/>
+        <column name="remote_ip" xsi:type="varchar" length="39" nullable="false" comment="Remote IP - IPv4 or IPv6"/>
+        <column name="user_agent" xsi:type="varchar" length="512" nullable="false" comment="User Agent"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+
+        <constraint xsi:type="foreign"
+                    referenceId="DJV_CUSTOMER_ACTIVE_SESSION_CUSTOMER_ID_CUSTOMER_ENTITY_ID"
+                    table="djv_customer_active_session"
+                    column="customer_id"
+                    referenceTable="customer_entity"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign"
+                    referenceId="DJV_CUSTOMER_ACTIVE_SESSION_INITIAL_STORE_ID_STORE_STORE_ID"
+                    table="djv_customer_active_session"
+                    column="initial_store_id"
+                    referenceTable="store"
+                    referenceColumn="store_id"/>
+        <constraint xsi:type="foreign"
+                    referenceId="DJV_CUSTOMER_ACTIVE_SESSION_LAST_STORE_ID_STORE_STORE_ID"
+                    table="djv_customer_active_session"
+                    column="last_store_id"
+                    referenceTable="store"
+                    referenceColumn="store_id"/>
+
+        <index referenceId="DJV_CUSTOMER_ACTIVE_SESSION_SESSION_ID" indexType="btree">
+            <column name="session_id"/>
+        </index>
+        <index referenceId="DJV_CUSTOMER_ACTIVE_SESSION_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+    </table>
+</schema>
