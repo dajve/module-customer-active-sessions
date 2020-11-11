@@ -1,0 +1,20 @@
+{
+    "name": "dajve/module-customer-active-sessions",
+    "description": "Tracks active concurrent customer sessions and allows customers to terminate via My Account",
+    "require": {
+        "magento/module-customer": "*"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "MIT"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Dajve\\CustomerActiveSessions\\": ""
+        }
+    }
+}
