@@ -14,6 +14,7 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Api\SearchResultsInterfaceFactory;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
@@ -150,9 +151,20 @@ class CustomerActiveSessionRepository implements CustomerActiveSessionRepository
      * @param CustomerActiveSessionInterface $customerActiveSession
      * @return CustomerActiveSessionInterface
      * @throws CouldNotSaveException
+     * @throws AlreadyExistsException
      */
     public function save(CustomerActiveSessionInterface $customerActiveSession): CustomerActiveSessionInterface
     {
+        $sessionId = $customerActiveSession->getSessionId();
+        if ($sessionId
+            && !$customerActiveSession->getId()
+            && $this->resource->sessionIdExists($sessionId)) {
+            throw new AlreadyExistsException(__(
+                'Customer session data for session id "%1" already exists',
+                $sessionId
+            ));
+        }
+
         try {
             $this->resource->save($customerActiveSession);
         } catch (LocalizedException $e) {

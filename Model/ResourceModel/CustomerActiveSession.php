@@ -26,4 +26,25 @@ class CustomerActiveSession extends AbstractDb
             CustomerActiveSessionInterface::ID
         );
     }
+
+    /**
+     * @param string $sessionId
+     * @return bool
+     */
+    public function sessionIdExists(string $sessionId): bool
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select();
+        $select->from(CommonVars::DB_TABLE_CUSTOMER_ACTIVE_SESSION, [
+            CustomerActiveSessionInterface::ID
+        ]);
+        $select->where(
+            sprintf('`%s` = ?', CustomerActiveSessionInterface::SESSION_ID),
+            $sessionId
+        );
+        $select->limit(1);
+
+        return (bool)$connection->fetchOne($select);
+    }
 }

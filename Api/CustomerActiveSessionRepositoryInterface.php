@@ -7,6 +7,7 @@ namespace Dajve\CustomerActiveSessions\Api;
 use Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -42,6 +43,7 @@ interface CustomerActiveSessionRepositoryInterface
      * @param CustomerActiveSessionInterface $customerActiveSession
      * @return CustomerActiveSessionInterface
      * @throws CouldNotSaveException
+     * @throws AlreadyExistsException
      */
     public function save(CustomerActiveSessionInterface $customerActiveSession): CustomerActiveSessionInterface;
 
