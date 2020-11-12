@@ -36,9 +36,10 @@
                     referenceTable="store"
                     referenceColumn="store_id"/>
 
-        <index referenceId="DJV_CUSTOMER_ACTIVE_SESSION_SESSION_ID" indexType="btree">
+        <constraint xsi:type="unique" referenceId="DJV_CUSTOMER_ACTIVE_SESSION_UNQ_SESSION_ID">
             <column name="session_id"/>
-        </index>
+        </constraint>
+
         <index referenceId="DJV_CUSTOMER_ACTIVE_SESSION_CUSTOMER_ID" indexType="btree">
             <column name="customer_id"/>
         </index>
