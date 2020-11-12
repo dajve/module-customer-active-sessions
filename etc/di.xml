@@ -5,7 +5,7 @@
 
     <type name="Dajve\CustomerActiveSessions\Model\CustomerActiveSession\Validator">
         <arguments>
-            <argument name="statusSource" xsi:type="object">Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Source\Status</argument>
+            <argument name="statusSource" xsi:type="object">Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Status</argument>
         </arguments>
     </type>
 
