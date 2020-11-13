@@ -8,6 +8,7 @@ use Dajve\CustomerActiveSessions\Api\CustomerActiveSessionRepositoryInterface;
 use Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface;
 use Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterfaceFactory;
 use Dajve\CustomerActiveSessions\Api\Service\RecordNewActiveSessionInterface;
+use Dajve\CustomerActiveSessions\Helper\DateTimeHelper;
 use Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Status as StatusSource;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Psr\Log\LoggerInterface;
@@ -25,6 +26,11 @@ class RecordNewActiveSession implements RecordNewActiveSessionInterface
     private $logger;
 
     /**
+     * @var DateTimeHelper
+     */
+    private $dateTimeHelper;
+
+    /**
      * @var CustomerActiveSessionInterfaceFactory
      */
     private $customerActiveSessionFactory;
@@ -37,15 +43,18 @@ class RecordNewActiveSession implements RecordNewActiveSessionInterface
     /**
      * RecordNewActiveSession constructor.
      * @param LoggerInterface $logger
+     * @param DateTimeHelper $dateTimeHelper
      * @param CustomerActiveSessionInterfaceFactory $customerActiveSessionFactory
      * @param CustomerActiveSessionRepositoryInterface $customerActiveSessionRepository
      */
     public function __construct(
         LoggerInterface $logger,
+        DateTimeHelper $dateTimeHelper,
         CustomerActiveSessionInterfaceFactory $customerActiveSessionFactory,
         CustomerActiveSessionRepositoryInterface $customerActiveSessionRepository
     ) {
         $this->logger = $logger;
+        $this->dateTimeHelper = $dateTimeHelper;
         $this->customerActiveSessionFactory = $customerActiveSessionFactory;
         $this->customerActiveSessionRepository = $customerActiveSessionRepository;
     }
@@ -88,12 +97,8 @@ class RecordNewActiveSession implements RecordNewActiveSessionInterface
      */
     public function collateSessionData(string $sessionId, int $customerId, array $additionalData): ?array
     {
-        try {
-            $now = new \DateTime('now', new \DateTimeZone('UTC'));
-            $nowFormatted = $now->format('Y-m-d H:i:s');
-        } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
-
+        $nowFormatted = $this->dateTimeHelper->getDateTimeFormatted('Y-m-d H:i:s', 'now', 'UTC');
+        if (!$nowFormatted) {
             return null;
         }
 
