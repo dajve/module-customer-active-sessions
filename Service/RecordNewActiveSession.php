@@ -107,12 +107,14 @@ class RecordNewActiveSession implements RecordNewActiveSessionInterface
                 CustomerActiveSessionInterface::START_TIME => $nowFormatted,
                 CustomerActiveSessionInterface::LAST_ACTIVITY_TIME => $nowFormatted,
             ],
-            $additionalData,
+            array_diff_key($additionalData, [
+                CustomerActiveSessionInterface::ID => true,
+                CustomerActiveSessionInterface::TERMINATION_TIME => true,
+            ]),
             [
                 CustomerActiveSessionInterface::SESSION_ID => $sessionId,
                 CustomerActiveSessionInterface::CUSTOMER_ID => $customerId,
                 CustomerActiveSessionInterface::STATUS => StatusSource::ACTIVE,
-                CustomerActiveSessionInterface::TERMINATION_TIME => null,
             ]
         );
     }

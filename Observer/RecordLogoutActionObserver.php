@@ -5,20 +5,19 @@ declare(strict_types=1);
 namespace Dajve\CustomerActiveSessions\Observer;
 
 use Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface;
-use Dajve\CustomerActiveSessions\Api\Service\RecordNewActiveSessionInterface as RecordNewActiveSessionServiceInterface;
+use Dajve\CustomerActiveSessions\Api\Service\RecordTerminatedActiveSessionInterface as RecordTerminatedActiveSessionServiceInterface; // phpcs:ignore Magento2.Files.LineLength.MaxExceeded
+use Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Status as StatusSource;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Framework\HTTP\Header as HttpHeader;
-use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Magento\Framework\Session\SessionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
- * Class RecordNewActiveSessionObserver
+ * Class RecordLogoutActionObserver
  * @package Dajve\CustomerActiveSessions\Observer
  * @author Dajve Green <me@dajve.co.uk>
  */
-class RecordNewActiveSessionObserver implements ObserverInterface
+class RecordLogoutActionObserver implements ObserverInterface
 {
     /**
      * @var SessionManagerInterface
@@ -26,50 +25,33 @@ class RecordNewActiveSessionObserver implements ObserverInterface
     private $sessionManager;
 
     /**
-     * @var RemoteAddress
-     */
-    private $remoteAddress;
-
-    /**
-     * @var HttpHeader
-     */
-    private $httpHeader;
-
-    /**
      * @var StoreManagerInterface
      */
     private $storeManager;
 
     /**
-     * @var RecordNewActiveSessionServiceInterface
+     * @var RecordTerminatedActiveSessionServiceInterface
      */
-    private $recordNewActiveSessionService;
+    private $recordTerminatedActiveSessionService;
 
     /**
-     * RecordNewActiveSessionObserver constructor.
+     * RecordLogoutActionObserver constructor.
      * @param SessionManagerInterface $sessionManager
-     * @param RemoteAddress $remoteAddress
-     * @param HttpHeader $httpHeader
      * @param StoreManagerInterface $storeManager
-     * @param RecordNewActiveSessionServiceInterface $recordNewActiveSessionService
+     * @param RecordTerminatedActiveSessionServiceInterface $recordTerminatedActiveSessionService
      */
     public function __construct(
         SessionManagerInterface $sessionManager,
-        RemoteAddress $remoteAddress,
-        HttpHeader $httpHeader,
         StoreManagerInterface $storeManager,
-        RecordNewActiveSessionServiceInterface $recordNewActiveSessionService
+        RecordTerminatedActiveSessionServiceInterface $recordTerminatedActiveSessionService
     ) {
         $this->sessionManager = $sessionManager;
-        $this->remoteAddress = $remoteAddress;
-        $this->httpHeader = $httpHeader;
         $this->storeManager = $storeManager;
-        $this->recordNewActiveSessionService = $recordNewActiveSessionService;
+        $this->recordTerminatedActiveSessionService = $recordTerminatedActiveSessionService;
     }
 
     /**
      * @param Observer $observer
-     * @return void
      */
     public function execute(Observer $observer)
     {
@@ -90,13 +72,11 @@ class RecordNewActiveSessionObserver implements ObserverInterface
             $storeId = 0;
         }
 
-        $this->recordNewActiveSessionService->recordNewActiveSession(
+        $this->recordTerminatedActiveSessionService->recordTerminatedActiveSession(
             $sessionId,
             (int)$customer->getId(),
+            StatusSource::LOGGED_OUT,
             [
-                CustomerActiveSessionInterface::REMOTE_IP => $this->remoteAddress->getRemoteAddress(),
-                CustomerActiveSessionInterface::USER_AGENT => $this->httpHeader->getHttpUserAgent(true),
-                CustomerActiveSessionInterface::INITIAL_STORE_ID => $storeId,
                 CustomerActiveSessionInterface::LAST_STORE_ID => $storeId,
             ]
         );

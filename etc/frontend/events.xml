@@ -3,4 +3,8 @@
     <event name="customer_login">
         <observer name="dajve_customerActiveSessions_recordNewActiveSession" instance="Dajve\CustomerActiveSessions\Observer\RecordNewActiveSessionObserver"/>
     </event>
+
+    <event name="customer_logout">
+        <observer name="dajve_customerActiveSessions_recordLogoutAction" instance="Dajve\CustomerActiveSessions\Observer\RecordLogoutActionObserver"/>
+    </event>
 </config>

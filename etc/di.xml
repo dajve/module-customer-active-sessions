@@ -3,6 +3,7 @@
     <preference for="Dajve\CustomerActiveSessions\Api\CustomerActiveSessionRepositoryInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSessionRepository"/>
     <preference for="Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSession"/>
     <preference for="Dajve\CustomerActiveSessions\Api\Service\RecordNewActiveSessionInterface" type="Dajve\CustomerActiveSessions\Service\RecordNewActiveSession"/>
+    <preference for="Dajve\CustomerActiveSessions\Api\Service\RecordTerminatedActiveSessionInterface" type="Dajve\CustomerActiveSessions\Service\RecordTerminatedActiveSession"/>
 
     <virtualType name="Dajve\CustomerActiveSessions\Helper\GetterSetterHelper\CustomerActiveSession" type="Dajve\CustomerActiveSessions\Helper\GetterSetterHelper">
         <arguments>
@@ -63,6 +64,12 @@
     <type name="Dajve\CustomerActiveSessions\Model\CustomerActiveSessionRepository">
         <arguments>
             <argument name="collectionProcessor" xsi:type="object">Dajve\CustomerActiveSessions\Model\Api\SearchCriteria\CustomerActiveSession\CollectionProcessor</argument>
+        </arguments>
+    </type>
+
+    <type name="Dajve\CustomerActiveSessions\Service\RecordTerminatedActiveSession">
+        <arguments>
+            <argument name="getterSetterHelper" xsi:type="object">Dajve\CustomerActiveSessions\Helper\GetterSetterHelper\CustomerActiveSession</argument>
         </arguments>
     </type>
 </config>
