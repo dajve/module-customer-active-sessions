@@ -19,6 +19,7 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Model\AbstractModel;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -120,7 +121,9 @@ class CustomerActiveSessionRepository implements CustomerActiveSessionRepository
     private function getByField(string $field, $value): CustomerActiveSessionInterface
     {
         $customerActiveSession = $this->customerActiveSessionFactory->create();
-        $this->resource->load($customerActiveSession, $value, $field);
+        if ($customerActiveSession instanceof AbstractModel) {
+            $this->resource->load($customerActiveSession, $value, $field);
+        }
 
         if (!$customerActiveSession->getId()) {
             throw NoSuchEntityException::singleField($field, $value);
@@ -166,6 +169,14 @@ class CustomerActiveSessionRepository implements CustomerActiveSessionRepository
         }
 
         try {
+            if (!($customerActiveSession instanceof AbstractModel)) {
+                throw new \LogicException(sprintf(
+                    'customerActiveSession instance must extend "%s"; "%s" encountered',
+                    AbstractModel::class,
+                    get_class($customerActiveSession)
+                ));
+            }
+
             $this->resource->save($customerActiveSession);
         } catch (LocalizedException $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
@@ -196,6 +207,14 @@ class CustomerActiveSessionRepository implements CustomerActiveSessionRepository
     public function delete(CustomerActiveSessionInterface $customerActiveSession): bool
     {
         try {
+            if (!($customerActiveSession instanceof AbstractModel)) {
+                throw new \LogicException(sprintf(
+                    'customerActiveSession instance must extend "%s"; "%s" encountered',
+                    AbstractModel::class,
+                    get_class($customerActiveSession)
+                ));
+            }
+
             $this->resource->delete($customerActiveSession);
         } catch (LocalizedException $e) {
             throw new CouldNotDeleteException(__($e->getMessage()));

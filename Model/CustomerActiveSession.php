@@ -50,6 +50,7 @@ class CustomerActiveSession extends AbstractModel implements CustomerActiveSessi
      * @param AbstractResource|null $resource
      * @param AbstractDb|null $resourceCollection
      * @param array $data
+     * @noinspection PhpDeprecationInspection
      */
     public function __construct(
         Context $context,

@@ -30,6 +30,7 @@ interface CustomerActiveSessionInterface extends ExtensibleDataInterface
     /**
      * @param int $id
      * @return mixed
+     * @noinspection PhpMissingParamTypeInspection
      */
     public function setId($id);
 

@@ -45,6 +45,7 @@ class RecordTerminatedActiveSession implements RecordTerminatedActiveSessionInte
     /**
      * RecordTerminatedActiveSession constructor.
      * @param LoggerInterface $logger
+     * @param GetterSetterHelper $getterSetterHelper
      * @param DateTimeHelper $dateTimeHelper
      * @param CustomerActiveSessionRepositoryInterface $customerActiveSessionRepository
      */

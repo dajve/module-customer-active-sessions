@@ -95,6 +95,7 @@ class CustomerActiveSession extends AbstractDb
                         CustomerActiveSessionInterface::CUSTOMER_ID,
                         $customerId
                     );
+                    /** @noinspection PhpUnreachableStatementInspection */
                     break;
 
                 default:
@@ -104,6 +105,7 @@ class CustomerActiveSession extends AbstractDb
                         $customerId,
                         $sessionId
                     ));
+                    /** @noinspection PhpUnreachableStatementInspection */
                     break;
             }
             // phpcs:enable Squiz.PHP.NonExecutableCode.Unreachable

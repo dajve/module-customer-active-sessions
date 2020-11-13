@@ -27,7 +27,7 @@ interface CustomerActiveSessionRepositoryInterface
     public function getById(int $id): CustomerActiveSessionInterface;
 
     /**
-     * @param int $sessionId
+     * @param string $sessionId
      * @return CustomerActiveSessionInterface
      * @throws NoSuchEntityException
      */
