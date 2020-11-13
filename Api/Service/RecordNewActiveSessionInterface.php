@@ -14,6 +14,7 @@ interface RecordNewActiveSessionInterface
     /**
      * @param string $sessionId
      * @param int $customerId
+     * @param array $additionalData
      * @return bool
      */
     public function recordNewActiveSession(string $sessionId, int $customerId, array $additionalData = []): bool;
