@@ -4,9 +4,16 @@
     <preference for="Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSession"/>
     <preference for="Dajve\CustomerActiveSessions\Api\Service\RecordNewActiveSessionInterface" type="Dajve\CustomerActiveSessions\Service\RecordNewActiveSession"/>
 
+    <virtualType name="Dajve\CustomerActiveSessions\Helper\GetterSetterHelper\CustomerActiveSession" type="Dajve\CustomerActiveSessions\Helper\GetterSetterHelper">
+        <arguments>
+            <argument name="targetFQCN" xsi:type="string">\Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface</argument>
+        </arguments>
+    </virtualType>
+
     <type name="Dajve\CustomerActiveSessions\Model\CustomerActiveSession\Validator">
         <arguments>
             <argument name="statusSource" xsi:type="object">Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Status</argument>
+            <argument name="getterSetterHelper" xsi:type="object">Dajve\CustomerActiveSessions\Helper\GetterSetterHelper\CustomerActiveSession</argument>
         </arguments>
     </type>
 

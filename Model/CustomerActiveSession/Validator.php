@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dajve\CustomerActiveSessions\Model\CustomerActiveSession;
 
 use Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface;
+use Dajve\CustomerActiveSessions\Helper\GetterSetterHelper;
 use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Framework\Validator\AbstractValidator;
 
@@ -21,13 +22,21 @@ class Validator extends AbstractValidator
     private $statusSource;
 
     /**
+     * @var GetterSetterHelper
+     */
+    private $getterSetterHelper;
+
+    /**
      * Validator constructor.
      * @param OptionSourceInterface $statusSource
+     * @param GetterSetterHelper $getterSetterHelper
      */
     public function __construct(
-        OptionSourceInterface $statusSource
+        OptionSourceInterface $statusSource,
+        GetterSetterHelper $getterSetterHelper
     ) {
         $this->statusSource = $statusSource;
+        $this->getterSetterHelper = $getterSetterHelper;
     }
 
     /**
@@ -79,8 +88,9 @@ class Validator extends AbstractValidator
         CustomerActiveSessionInterface $customerActiveSession,
         string $field
     ): bool {
-        $method = $this->methodizeFieldName('get', $field);
-        if (!method_exists($customerActiveSession, $method)) {
+        try {
+            $value = $this->getterSetterHelper->getData($customerActiveSession, $field);
+        } catch (\BadMethodCallException $e) {
             $this->_addMessages([
                 __('Active session data missing for "%s"', $field)
             ]);
@@ -88,7 +98,6 @@ class Validator extends AbstractValidator
             return false;
         }
 
-        $value = $customerActiveSession->{$method}();
         if (is_string($value)) {
             $value = trim($value);
         }
@@ -112,12 +121,12 @@ class Validator extends AbstractValidator
         CustomerActiveSessionInterface $customerActiveSession,
         string $field
     ): bool {
-        $method = $this->methodizeFieldName('get', $field);
-        if (!method_exists($customerActiveSession, $method)) {
+        try {
+            $value = $this->getterSetterHelper->getData($customerActiveSession, $field);
+        } catch (\BadMethodCallException $e) {
             return true;
         }
 
-        $value = $customerActiveSession->{$method}();
         if (is_string($value)) {
             $value = trim($value);
         }
@@ -175,15 +184,5 @@ class Validator extends AbstractValidator
         }
 
         return true;
-    }
-
-    /**
-     * @param string $prefix
-     * @param string $field
-     * @return string
-     */
-    private function methodizeFieldName(string $prefix, string $field): string
-    {
-        return $prefix . str_replace('_', '', ucwords($field, '_'));
     }
 }
