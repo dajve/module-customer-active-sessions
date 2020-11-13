@@ -7,4 +7,8 @@
     <event name="customer_logout">
         <observer name="dajve_customerActiveSessions_recordLogoutAction" instance="Dajve\CustomerActiveSessions\Observer\RecordLogoutActionObserver"/>
     </event>
+
+    <event name="controller_action_postdispatch">
+        <observer name="dajve_customerActiveSessions_updateActiveSessionAction" instance="Dajve\CustomerActiveSessions\Observer\UpdateActiveSessionObserver"/>
+    </event>
 </config>

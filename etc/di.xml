@@ -4,6 +4,7 @@
     <preference for="Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSession"/>
     <preference for="Dajve\CustomerActiveSessions\Api\Service\RecordNewActiveSessionInterface" type="Dajve\CustomerActiveSessions\Service\RecordNewActiveSession"/>
     <preference for="Dajve\CustomerActiveSessions\Api\Service\RecordTerminatedActiveSessionInterface" type="Dajve\CustomerActiveSessions\Service\RecordTerminatedActiveSession"/>
+    <preference for="Dajve\CustomerActiveSessions\Api\Service\UpdateActiveSessionInterface" type="Dajve\CustomerActiveSessions\Service\UpdateActiveSession"/>
 
     <virtualType name="Dajve\CustomerActiveSessions\Helper\GetterSetterHelper\CustomerActiveSession" type="Dajve\CustomerActiveSessions\Helper\GetterSetterHelper">
         <arguments>
