@@ -5,7 +5,7 @@
         <column name="customer_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Customer entity ID"/>
         <column name="start_time" xsi:type="datetime" on_update="false" nullable="false" comment="Session start time"/>
         <column name="last_activity_time" xsi:type="datetime" on_update="false" nullable="false" comment="Session last activity time"/>
-        <column name="termination_time" xsi:type="datetime" on_update="false" nullable="false" comment="Session termination time"/>
+        <column name="termination_time" xsi:type="datetime" on_update="false" nullable="true" comment="Session termination time"/>
         <column name="initial_store_id" xsi:type="smallint" padding="5" unsigned="true" nullable="false" comment="Store ID in which session was started"/>
         <column name="last_store_id" xsi:type="smallint" padding="5" unsigned="true" nullable="false" comment="Store ID in which last activity performed"/>
         <column name="status" xsi:type="smallint" padding="5" unsigned="true" nullable="false" comment="Session status"/>
