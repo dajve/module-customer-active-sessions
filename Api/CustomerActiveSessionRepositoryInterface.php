@@ -31,7 +31,7 @@ interface CustomerActiveSessionRepositoryInterface
      * @return CustomerActiveSessionInterface
      * @throws NoSuchEntityException
      */
-    public function getBySessionId(int $sessionId): CustomerActiveSessionInterface;
+    public function getBySessionId(string $sessionId): CustomerActiveSessionInterface;
 
     /**
      * @param SearchCriteriaInterface $searchCriteria

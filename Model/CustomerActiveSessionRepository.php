@@ -102,11 +102,11 @@ class CustomerActiveSessionRepository implements CustomerActiveSessionRepository
     }
 
     /**
-     * @param int $sessionId
+     * @param string $sessionId
      * @return CustomerActiveSessionInterface
      * @throws NoSuchEntityException
      */
-    public function getBySessionId(int $sessionId): CustomerActiveSessionInterface
+    public function getBySessionId(string $sessionId): CustomerActiveSessionInterface
     {
         return $this->getByField(CustomerActiveSessionInterface::SESSION_ID, $sessionId);
     }
