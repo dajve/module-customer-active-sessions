@@ -9,6 +9,7 @@ use Dajve\CustomerActiveSessions\Api\CustomerActiveSessionIteratorInterfaceFacto
 use Dajve\CustomerActiveSessions\Api\CustomerActiveSessionRepositoryInterface;
 use Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface;
 use Dajve\CustomerActiveSessions\Helper\DateTimeHelper;
+use Dajve\CustomerActiveSessions\Helper\UserAgentParser;
 use Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Status as StatusSource;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -70,6 +71,11 @@ class SessionsProvider implements ArgumentInterface
     private $statusSource;
 
     /**
+     * @var UserAgentParser
+     */
+    private $userAgentParser;
+
+    /**
      * SessionsProvider constructor.
      * @param CustomerSession $customerSession
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
@@ -77,6 +83,9 @@ class SessionsProvider implements ArgumentInterface
      * @param CustomerActiveSessionRepositoryInterface $customerActiveSessionRepository
      * @param CustomerActiveSessionIteratorInterfaceFactory $customerActiveSessionsIteratorFactory
      * @param DateTimeHelper $dateTimeHelper
+     * @param StdLibTimezoneInterface $timezone
+     * @param StatusSource $statusSource
+     * @param UserAgentParser $userAgentParser
      */
     public function __construct(
         CustomerSession $customerSession,
@@ -86,7 +95,8 @@ class SessionsProvider implements ArgumentInterface
         CustomerActiveSessionIteratorInterfaceFactory $customerActiveSessionsIteratorFactory,
         DateTimeHelper $dateTimeHelper,
         StdLibTimezoneInterface $timezone,
-        StatusSource $statusSource
+        StatusSource $statusSource,
+        UserAgentParser $userAgentParser
     ) {
         $this->customerSession = $customerSession;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -96,6 +106,7 @@ class SessionsProvider implements ArgumentInterface
         $this->dateTimeHelper = $dateTimeHelper;
         $this->timezone = $timezone;
         $this->statusSource = $statusSource;
+        $this->userAgentParser = $userAgentParser;
     }
 
     /**
@@ -151,6 +162,42 @@ class SessionsProvider implements ArgumentInterface
         $statuses = $this->statusSource->toOptionHash();
 
         return (string)($statuses[$status] ?? '');
+    }
+
+    /**
+     * @param string $userAgent
+     * @param bool $withVersion
+     * @return string
+     */
+    public function getBrowser(string $userAgent, bool $withVersion = false): string
+    {
+        $return = $this->userAgentParser->getBrowser($userAgent);
+        $version = $withVersion
+            ? $this->userAgentParser->getBrowserVersion($userAgent, true)
+            : null;
+        if ($return && $version) {
+            $return .= ' ' . $version;
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param string $userAgent
+     * @param bool $withVersion
+     * @return string
+     */
+    public function getPlatform(string $userAgent, bool $withVersion = false): string
+    {
+        $return = $this->userAgentParser->getPlatform($userAgent);
+        $version = $withVersion
+            ? $this->userAgentParser->getPlatformVersion($userAgent, true)
+            : null;
+        if ($return && $version) {
+            $return .= ' ' . $version;
+        }
+
+        return $return;
     }
 
     /**

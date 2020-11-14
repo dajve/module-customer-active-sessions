@@ -40,8 +40,19 @@
                             <td class="col remote-ip" data-th="<?php echo $block->escapeHtmlAttr(__("IP")); ?>">
                                 <?php echo $block->escapeHtml($customerActiveSession->getRemoteIp()); ?>
                             </td>
+                            <?php
+                                $userAgent = $customerActiveSession->getUserAgent();
+                                $browser = $sessionsProvider->getBrowser($userAgent, true);
+                                $browserOnlyLower = strtolower($sessionsProvider->getBrowser($userAgent, false));
+                                $platform = $sessionsProvider->getPlatform($userAgent, true);
+                                $platformOnlyLower = strtolower($sessionsProvider->getPlatform($userAgent, false));
+                            ?>
                             <td class="col user-agent" data-th="<?php echo $block->escapeHtmlAttr(__("Device")); ?>">
-                                <?php echo $block->escapeHtml($customerActiveSession->getUserAgent()); ?>
+                                <span class="user-agent__browser user-agent__browser__<?php echo $block->escapeHtmlAttr($browserOnlyLower); ?>"><?php echo $block->escapeHtml($browser); ?></span>
+                                <?php if ($browser && $platform): ?>
+                                    <?php echo $block->escapeHtml(__("on")); ?>
+                                <?php endif; ?>
+                                <span class="user-agent__platform user-agent__platform__<?php echo $block->escapeHtmlAttr($platformOnlyLower); ?>"><?php echo $block->escapeHtml($platform); ?></span>
                             </td>
                             <td class="col action" data-th="<?php echo $block->escapeHtmlAttr(__("Action")); ?>">
                                 &nbsp;

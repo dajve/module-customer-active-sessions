@@ -2,7 +2,8 @@
     "name": "dajve/module-customer-active-sessions",
     "description": "Tracks active concurrent customer sessions and allows customers to terminate via My Account",
     "require": {
-        "magento/module-customer": "*"
+        "magento/module-customer": "*",
+        "donatj/phpuseragentparser": "~0.7|^1.0.0"
     },
     "type": "magento2-module",
     "version": "1.0.0",
