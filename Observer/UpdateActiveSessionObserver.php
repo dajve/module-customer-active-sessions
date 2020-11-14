@@ -7,6 +7,7 @@ namespace Dajve\CustomerActiveSessions\Observer;
 use Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface;
 use Dajve\CustomerActiveSessions\Api\Service\UpdateActiveSessionInterface as UpdateActiveSessionServiceInterface;
 use Magento\Customer\Model\Session as CustomerSession;
+use Magento\Framework\App\HttpRequestInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Session\SessionManagerInterface;
@@ -64,6 +65,14 @@ class UpdateActiveSessionObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         if (!$this->customerSession->isLoggedIn()) {
+            return;
+        }
+
+        $request = $observer->getDataUsingMethod('request');
+        if (!$request
+            && $request instanceof HttpRequestInterface
+            && method_exists($request, 'isAjax')
+            && $request->isAjax()) {
             return;
         }
 
