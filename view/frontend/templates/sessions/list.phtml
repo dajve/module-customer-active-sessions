@@ -1,0 +1,55 @@
+<?php
+    /** @var Magento\Framework\View\Element\Template $block */
+    /** @var Dajve\CustomerActiveSessions\ViewModel\SessionsProvider $sessionsProvider */
+    $sessionsProvider = $block->getDataUsingMethod('sessions_provider');
+?>
+<div class="block block-customer-active-sessions">
+    <div class="block-title">
+        <strong><?php echo $block->escapeHtml(__("Sessions")); ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="table-wrapper customer-active-sessions">
+            <table id="customer-active-sessions-table" class="data table table-customer-active-sessions history">
+                <caption class="table-caption"><?php echo $block->escapeHtml(__("Recorded Sessions")); ?></caption>
+                <thead>
+                    <tr>
+                        <th class="col start-time" scope="col"><?php echo $block->escapeHtml(__("Started")); ?></th>
+                        <th class="col status" scope="col"><?php echo $block->escapeHtml(__("Status")); ?></th>
+                        <th class="col last-activity-time" scope="col"><?php echo $block->escapeHtml(__("Last Activity")); ?></th>
+                        <th class="col termination-time" scope="col"><?php echo $block->escapeHtml(__("Ended")); ?></th>
+                        <th class="col remote-ip" scope="col"><?php echo $block->escapeHtml(__("IP")); ?></th>
+                        <th class="col user-agent" scope="col"><?php echo $block->escapeHtml(__("Device")); ?></th>
+                        <th class="col action" scope="col"><?php echo $block->escapeHtml(__("Action")); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($sessionsProvider->getCustomerActiveSessions() as $customerActiveSession): ?>
+                        <tr>
+                            <td class="col start-time" data-th="<?php echo $block->escapeHtmlAttr(__("Started")); ?>">
+                                <?php /** @noEscape  */ echo $sessionsProvider->formatDate($customerActiveSession->getStartTime()); ?>
+                            </td>
+                            <td class="col status" data-th="<?php echo $block->escapeHtmlAttr(__("Status")); ?>">
+                                <?php echo $block->escapeHtml($sessionsProvider->getStatusLabel($customerActiveSession->getStatus())); ?>
+                            </td>
+                            <td class="col last-activity-time" data-th="<?php echo $block->escapeHtmlAttr(__("Last Activity")); ?>">
+                                <?php /** @noEscape  */ echo $sessionsProvider->formatDate($customerActiveSession->getLastActivityTime()); ?>
+                            </td>
+                            <td class="col termination-time" data-th="<?php echo $block->escapeHtmlAttr(__("Ended")); ?>">
+                                <?php /** @noEscape  */ echo $sessionsProvider->formatDate($customerActiveSession->getTerminationTime()); ?>
+                            </td>
+                            <td class="col remote-ip" data-th="<?php echo $block->escapeHtmlAttr(__("IP")); ?>">
+                                <?php echo $block->escapeHtml($customerActiveSession->getRemoteIp()); ?>
+                            </td>
+                            <td class="col user-agent" data-th="<?php echo $block->escapeHtmlAttr(__("Device")); ?>">
+                                <?php echo $block->escapeHtml($customerActiveSession->getUserAgent()); ?>
+                            </td>
+                            <td class="col action" data-th="<?php echo $block->escapeHtmlAttr(__("Action")); ?>">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Dajve\CustomerActiveSessions\Api\CustomerActiveSessionRepositoryInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSessionRepository"/>
+    <preference for="Dajve\CustomerActiveSessions\Api\CustomerActiveSessionIteratorInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSession\Iterator"/>
     <preference for="Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface" type="Dajve\CustomerActiveSessions\Model\CustomerActiveSession"/>
     <preference for="Dajve\CustomerActiveSessions\Api\Service\RecordNewActiveSessionInterface" type="Dajve\CustomerActiveSessions\Service\RecordNewActiveSession"/>
     <preference for="Dajve\CustomerActiveSessions\Api\Service\RecordTerminatedActiveSessionInterface" type="Dajve\CustomerActiveSessions\Service\RecordTerminatedActiveSession"/>

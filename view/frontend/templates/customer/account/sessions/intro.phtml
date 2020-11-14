@@ -1,0 +1,9 @@
+<?php
+    /** @var Magento\Framework\View\Element\Template $block */
+    /** @var Dajve\CustomerActiveSessions\ViewModel\Customer\Account\IntroTextProvider $introTextProvider */
+    $introTextProvider = $block->getDataUsingMethod('intro_text_provider');
+    $introText = $introTextProvider->getIntroText();
+?>
+<?php if ($introText): ?>
+    <div class="customer-account-sessions-intro-text"><?php echo $block->escapeHtml($introText, ['p', 'a', 'strong', 'em', 'br']) ?></div>
+<?php endif; ?>

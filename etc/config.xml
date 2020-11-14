@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <dajve_customeractivesessions>
+            <customer_account>
+                <intro_text><![CDATA[<p>Below you can see a list of all times your account has been accessed and from where, as well as manually terminating any session.</p>
+<p>Please take a moment to review your account activity for any suspicious behaviour. If you suspect your account has been accessed without your knowledge, please terminate any active sessions and reset your password.</p>
+<p>If you have any concerns about your account security, please do not hesitate to contact us.</p>]]></intro_text>
+            </customer_account>
+        </dajve_customeractivesessions>
+    </default>
+</config>
