@@ -9,6 +9,7 @@ use Dajve\CustomerActiveSessions\Api\Service\RecordTerminatedActiveSessionInterf
 use Dajve\CustomerActiveSessions\Model\ResourceModel\CustomerActiveSession as CustomerActiveSessionResource;
 use Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Status as StatusSource;
 use Magento\Customer\Api\Data\CustomerInterface;
+use Magento\Customer\Model\Customer as CustomerModel;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Session\SessionManagerInterface;
@@ -46,6 +47,7 @@ class RecordLogoutActionObserver implements ObserverInterface
      * @param SessionManagerInterface $sessionManager
      * @param StoreManagerInterface $storeManager
      * @param RecordTerminatedActiveSessionServiceInterface $recordTerminatedActiveSessionService
+     * @param CustomerActiveSessionResource $customerActiveSessionResource
      */
     public function __construct(
         SessionManagerInterface $sessionManager,
@@ -65,7 +67,8 @@ class RecordLogoutActionObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         $customer = $observer->getDataUsingMethod('customer');
-        if (!($customer instanceof CustomerInterface) || !$customer->getId()) {
+        if ((!($customer instanceof CustomerInterface) && !($customer instanceof CustomerModel))
+            || !$customer->getId()) {
             return;
         }
 
