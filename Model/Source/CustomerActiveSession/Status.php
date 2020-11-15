@@ -25,6 +25,20 @@ class Status implements
     public const TERMINATED_BY_CUSTOMER = 4;
     public const TERMINATED_BY_CONCURRENT_LOGIN = 5;
 
+    public const GROUP_ACTIVE = [
+        self::ACTIVE,
+    ];
+    public const GROUP_TERMINATED = [
+        self::TERMINATED_BY_CUSTOMER,
+        self::TERMINATED_BY_CONCURRENT_LOGIN,
+    ];
+    public const GROUP_INACTIVE = [
+        self::LOGGED_OUT,
+        self::TIMED_OUT,
+        self::TERMINATED_BY_CUSTOMER,
+        self::TERMINATED_BY_CONCURRENT_LOGIN,
+    ];
+
     /**
      * @return array[]
      */

@@ -6,7 +6,9 @@ namespace Dajve\CustomerActiveSessions\Observer;
 
 use Dajve\CustomerActiveSessions\Api\Data\CustomerActiveSessionInterface;
 use Dajve\CustomerActiveSessions\Api\Service\RecordTerminatedActiveSessionInterface as RecordTerminatedActiveSessionServiceInterface; // phpcs:ignore Magento2.Files.LineLength.MaxExceeded
+use Dajve\CustomerActiveSessions\Model\ResourceModel\CustomerActiveSession as CustomerActiveSessionResource;
 use Dajve\CustomerActiveSessions\Model\Source\CustomerActiveSession\Status as StatusSource;
+use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Session\SessionManagerInterface;
@@ -35,6 +37,11 @@ class RecordLogoutActionObserver implements ObserverInterface
     private $recordTerminatedActiveSessionService;
 
     /**
+     * @var CustomerActiveSessionResource
+     */
+    private $customerActiveSessionResource;
+
+    /**
      * RecordLogoutActionObserver constructor.
      * @param SessionManagerInterface $sessionManager
      * @param StoreManagerInterface $storeManager
@@ -43,11 +50,13 @@ class RecordLogoutActionObserver implements ObserverInterface
     public function __construct(
         SessionManagerInterface $sessionManager,
         StoreManagerInterface $storeManager,
-        RecordTerminatedActiveSessionServiceInterface $recordTerminatedActiveSessionService
+        RecordTerminatedActiveSessionServiceInterface $recordTerminatedActiveSessionService,
+        CustomerActiveSessionResource $customerActiveSessionResource
     ) {
         $this->sessionManager = $sessionManager;
         $this->storeManager = $storeManager;
         $this->recordTerminatedActiveSessionService = $recordTerminatedActiveSessionService;
+        $this->customerActiveSessionResource = $customerActiveSessionResource;
     }
 
     /**
@@ -56,12 +65,13 @@ class RecordLogoutActionObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         $customer = $observer->getDataUsingMethod('customer');
-        if (!$customer || !$customer->getId()) {
+        if (!($customer instanceof CustomerInterface) || !$customer->getId()) {
             return;
         }
 
         $sessionId = $this->sessionManager->getSessionId();
-        if (!$sessionId) {
+        if (!$sessionId
+            || $this->customerActiveSessionResource->sessionIdExists($sessionId, StatusSource::GROUP_TERMINATED)) {
             return;
         }
 

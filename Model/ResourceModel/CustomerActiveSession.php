@@ -31,9 +31,10 @@ class CustomerActiveSession extends AbstractDb
 
     /**
      * @param string $sessionId
+     * @param array|null $statuses
      * @return bool
      */
-    public function sessionIdExists(string $sessionId): bool
+    public function sessionIdExists(string $sessionId, array $statuses = null): bool
     {
         $connection = $this->getConnection();
 
@@ -45,6 +46,12 @@ class CustomerActiveSession extends AbstractDb
             sprintf('`%s` = ?', CustomerActiveSessionInterface::SESSION_ID),
             $sessionId
         );
+        if (null !== $statuses) {
+            $select->where(
+                sprintf('`%s` IN (?)', CustomerActiveSessionInterface::STATUS),
+                $statuses
+            );
+        }
         $select->limit(1);
 
         return (bool)$connection->fetchOne($select);
