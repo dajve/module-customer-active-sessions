@@ -44,7 +44,7 @@ class Iterator implements CustomerActiveSessionIteratorInterface
     /**
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
@@ -68,7 +68,7 @@ class Iterator implements CustomerActiveSessionIteratorInterface
     /**
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }

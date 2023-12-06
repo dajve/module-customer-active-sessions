@@ -38,7 +38,7 @@ class UserAgentParser
 
         $return = $userAgentParsed['browser_version'] ?? '';
         if ($majorOnly) {
-            $return = preg_replace('/\..*$/', '', $return);
+            $return = preg_replace('/\..*$/', '', (string) $return);
         }
 
         return $return;
@@ -65,7 +65,7 @@ class UserAgentParser
 
         $return = $userAgentParsed['platform_version'] ?? '';
         if ($majorOnly) {
-            $return = preg_replace('/\..*$/', '', $return);
+            $return = preg_replace('/\..*$/', '', (string) $return);
         }
 
         return $return;
